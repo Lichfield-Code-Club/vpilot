@@ -13,13 +13,18 @@ def summary(lines):
 
 def decoder(byte_line):
     formats = [
-    '<4s 16s d d f f f f f f f',         # Possible 4-byte header, 16-byte message type, lat/lon doubles, and other floats
-    '<4s d d f f f f f f f f f',          # 4-byte header, no message type, doubles for lat/lon, floats for other metrics
-    '<4s 12s d d f f f f f f',            # 4-byte header, 12-byte message type, doubles, floats
-    '<8s d d f f f f f f f f',            # 8-byte header, lat/lon as doubles, various floats
-    '<4s 8s d f f f f f f f f',           # 4-byte header, 8-byte message type, mixed doubles/floats
-    '<4s d d d d f f f f f f f',          # 4-byte header, doubles for location and alt, heading, etc.
-    '<d d d d f f f f f',                 # No header, all numeric data (location as doubles)
+#    '<4s 16s d d f f f f f f f',         # Possible 4-byte header, 16-byte message type, lat/lon doubles, and other floats
+#    '<4s d d f f f f f f f f f',          # 4-byte header, no message type, doubles for lat/lon, floats for other metrics
+#    '<4s 12s d d f f f f f f',            # 4-byte header, 12-byte message type, doubles, floats
+#    '<8s d d f f f f f f f f',            # 8-byte header, lat/lon as doubles, various floats
+#    '<4s 8s d f f f f f f f f',           # 4-byte header, 8-byte message type, mixed doubles/floats
+#    '<4s d d d d f f f f f f f',          # 4-byte header, doubles for location and alt, heading, etc.
+#    '<d d d d f f f f f',                 # No header, all numeric data (location as doubles)
+     '<12s f f f f f f f f f f f', # Guess 12-byte header
+     '<6s  f f f f f f f f f f f', # Guess 12-byte header
+     '<4s  f f f f f f f f f f f', # Guess 12-byte header
+     '<f f f ', # Guess 12-byte header
+     '<d d d ', # Guess 12-byte header
     ]
 
     decoded = []
@@ -53,6 +58,7 @@ def handle_data(messages):
             fmt = decoded['fmt']
             print(f"{'!'*20} FORMAT[{fmt}] {'!'*20}")
             [print(x) for x in decode]
+        print(x)
 
 
 def message_text(messages):
